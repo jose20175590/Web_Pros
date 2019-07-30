@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Persistence;
+using Service;
 
 namespace Web_Pro
 {
@@ -31,7 +32,12 @@ namespace Web_Pro
 
             services.AddDbContext<TablaDbContext>
                 (options => options.UseSqlServer(connection));
-            services.AddMvc();
+
+            services.AddTransient<IEstudianteService, EstudianteService>();
+            services.AddTransient<IMaestroService, MaestroService>();
+            services.AddTransient<IMateriaService, MateriaService>();
+            services.AddTransient<IAulaService, AulaService>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
